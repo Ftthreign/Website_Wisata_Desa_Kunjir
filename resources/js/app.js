@@ -1,5 +1,6 @@
 import "./bootstrap";
 import "./nav";
+import "./image-modal";
 
 document.getElementById("navToggle")?.addEventListener("click", () => {
     document.getElementById("navMenuMobile")?.classList.toggle("hidden");
