@@ -1,5 +1,7 @@
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./bootstrap";
 import "./nav";
+import "./image-modal";
 
 document.getElementById("navToggle")?.addEventListener("click", () => {
     document.getElementById("navMenuMobile")?.classList.toggle("hidden");

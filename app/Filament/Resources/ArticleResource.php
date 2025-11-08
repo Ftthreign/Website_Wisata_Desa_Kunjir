@@ -39,6 +39,7 @@ class ArticleResource extends Resource
                     ->default(fn() => Auth::user()?->name)
                     ->maxLength(100)
                     ->nullable()
+                    ->dehydrated()
                     ->disabled(),
 
                 FileUpload::make('thumbnail_path')
@@ -49,7 +50,9 @@ class ArticleResource extends Resource
                     ->imageEditor(fn($livewire) => $livewire instanceof CreateArticle)
                     ->maxSize(5120)
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                    ->nullable(),
+                    ->required(),
+
+
                 TextInput::make('video_url')
                     ->label('Link Video (Opsional)')
                     ->url()
@@ -75,14 +78,26 @@ class ArticleResource extends Resource
                     ])
                     ->columnSpanFull(),
 
-                Select::make('status')
-                    ->label('Status')
-                    ->options([
-                        'draft' => 'Draft',
-                        'published' => 'Published',
-                    ])
-                    ->default('draft')
-                    ->required(),
+                Grid::make()
+                    ->columns(2)
+                    ->schema([
+                        Select::make('status')
+                            ->label('Status')
+                            ->options([
+                                'draft' => 'Draft',
+                                'published' => 'Published',
+                            ])
+                            ->default('draft')
+                            ->required(),
+
+                        Select::make('tagline')
+                            ->label('Tagline')
+                            ->default('artikel')
+                            ->options([
+                                'artikel' => 'Artikel',
+                                'informasi' => 'Informasi',
+                            ]),
+                    ]),
 
                 DateTimePicker::make('published_at')
                     ->label('Tanggal Publikasi')
@@ -119,11 +134,6 @@ class ArticleResource extends Resource
                     ->label('Tayangan')
                     ->sortable(),
 
-                TextColumn::make('published_at')
-                    ->label('Dipublikasikan')
-                    ->dateTime()
-                    ->sortable(),
-
                 TextColumn::make('created_at')
                     ->label('Dibuat')
                     ->dateTime()
@@ -133,6 +143,14 @@ class ArticleResource extends Resource
                 EditAction::make()->label('Edit'),
                 DeleteAction::make()
                     ->label('Hapus')
+                    ->visible(function () {
+                        /** @var \App\Models\User|\Illuminate\Contracts\Auth\Authenticatable|null $user */
+                        $user = Auth::user();
+                        if (!$user) {
+                            return false;
+                        }
+                        return $user->hasRole('admin') || $user->hasRole('superadmin');
+                    })
                     ->modalHeading('Hapus Artikel?')
                     ->modalDescription(fn($record) => "Yakin ingin menghapus artikel berjudul '{$record->title}'?")
                     ->modalSubmitActionLabel('Ya, Hapus')
@@ -158,5 +176,33 @@ class ArticleResource extends Resource
             'create' => CreateArticle::route('/create'),
             'edit' => EditArticle::route('/{record}/edit'),
         ];
+    }
+
+    public static function canAccess(): bool
+    {
+        /** @var \App\Models\User|\Illuminate\Foundation\Auth\User $user */
+        $user = Auth::user();
+        return $user && ($user->hasRole('admin') || $user->hasRole('superadmin') || $user->hasRole('editor'));
+    }
+
+    public static function canCreate(): bool
+    {
+        /** @var \App\Models\User|\Illuminate\Foundation\Auth\User $user */
+        $user = Auth::user();
+        return $user && ($user->hasRole('admin') || $user->hasRole('superadmin') || $user->hasRole('editor'));
+    }
+
+    public static function canEdit($record): bool
+    {
+        /** @var \App\Models\User|\Illuminate\Foundation\Auth\User $user */
+        $user = Auth::user();
+        return $user && ($user->hasRole('admin') || $user->hasRole('superadmin') || $user->hasRole('editor'));
+    }
+
+    public static function canDelete($record): bool
+    {
+        /** @var \App\Models\User|\Illuminate\Foundation\Auth\User $user */
+        $user = Auth::user();
+        return $user && ($user->hasRole('admin') || $user->hasRole('superadmin'));
     }
 }

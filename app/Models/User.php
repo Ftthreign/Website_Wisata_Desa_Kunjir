@@ -6,15 +6,27 @@ namespace App\Models;
 
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
+
+/**
+ * @method bool hasRole(string|array $roles)
+ * @method bool hasAnyRole(string|array $roles)
+ * @method \Illuminate\Support\Collection getRoleNames()
+ */
 
 class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasUuids;
+    /**
+     * @method bool hasRole(string $role)
+     * @method \Spatie\Permission\Models\Role[] getRoleNames()
+     */
+    use HasFactory, Notifiable, HasRoles;
+
+    protected $guard_name = 'web';
 
     public function canAccessPanel(Panel $panel): bool
     {

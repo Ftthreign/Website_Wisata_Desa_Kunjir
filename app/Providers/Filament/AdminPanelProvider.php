@@ -40,7 +40,7 @@ class AdminPanelProvider extends PanelProvider
             ->brandName('Wisata Kunjir Dashboard')
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
+                \App\Filament\Widgets\AccountWidget::class,
                 \App\Filament\Widgets\UserStatsWidget::class,
                 ArticleWidget::class,
                 ArticleMonthlyWidget::class

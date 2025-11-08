@@ -30,9 +30,7 @@
         @yield('content')
     </main>
 
-    <footer class="bg-gray-900 text-white text-sm text-center py-8">
-        © {{ date('Y') }} Desa Wisata Kunjir — Lampung Selatan
-    </footer>
+    @include('livewire.components.footer')
 
     @livewireScripts
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
