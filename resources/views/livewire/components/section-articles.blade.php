@@ -2,7 +2,7 @@
     use Illuminate\Support\Str;
 @endphp
 
-<section class="bg-blue-50 py-20">
+<section class="bg-blue-50 py-20" id="articles">
     <div class="max-w-7xl mx-auto px-4">
         <div class="grid md:grid-cols-2 gap-8 items-start mb-10">
             <div>

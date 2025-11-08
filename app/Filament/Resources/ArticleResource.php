@@ -143,6 +143,14 @@ class ArticleResource extends Resource
                 EditAction::make()->label('Edit'),
                 DeleteAction::make()
                     ->label('Hapus')
+                    ->visible(function () {
+                        /** @var \App\Models\User|\Illuminate\Contracts\Auth\Authenticatable|null $user */
+                        $user = Auth::user();
+                        if (!$user) {
+                            return false;
+                        }
+                        return $user->hasRole('admin') || $user->hasRole('superadmin');
+                    })
                     ->modalHeading('Hapus Artikel?')
                     ->modalDescription(fn($record) => "Yakin ingin menghapus artikel berjudul '{$record->title}'?")
                     ->modalSubmitActionLabel('Ya, Hapus')
@@ -168,5 +176,33 @@ class ArticleResource extends Resource
             'create' => CreateArticle::route('/create'),
             'edit' => EditArticle::route('/{record}/edit'),
         ];
+    }
+
+    public static function canAccess(): bool
+    {
+        /** @var \App\Models\User|\Illuminate\Foundation\Auth\User $user */
+        $user = Auth::user();
+        return $user && ($user->hasRole('admin') || $user->hasRole('superadmin') || $user->hasRole('editor'));
+    }
+
+    public static function canCreate(): bool
+    {
+        /** @var \App\Models\User|\Illuminate\Foundation\Auth\User $user */
+        $user = Auth::user();
+        return $user && ($user->hasRole('admin') || $user->hasRole('superadmin') || $user->hasRole('editor'));
+    }
+
+    public static function canEdit($record): bool
+    {
+        /** @var \App\Models\User|\Illuminate\Foundation\Auth\User $user */
+        $user = Auth::user();
+        return $user && ($user->hasRole('admin') || $user->hasRole('superadmin') || $user->hasRole('editor'));
+    }
+
+    public static function canDelete($record): bool
+    {
+        /** @var \App\Models\User|\Illuminate\Foundation\Auth\User $user */
+        $user = Auth::user();
+        return $user && ($user->hasRole('admin') || $user->hasRole('superadmin'));
     }
 }

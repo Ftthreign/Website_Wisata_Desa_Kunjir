@@ -1,7 +1,4 @@
 <section id="maps" class="relative w-full py-20 bg-gradient-to-b from-blue-50 to-emerald-50 overflow-hidden">
-    <!-- Decorative Blur Backgrounds -->
-    <div class="absolute -top-20 -left-20 w-96 h-96 bg-emerald-400/10 blur-3xl rounded-full"></div>
-    <div class="absolute bottom-0 right-0 w-[30rem] h-[30rem] bg-blue-400/10 blur-3xl rounded-full"></div>
 
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
 

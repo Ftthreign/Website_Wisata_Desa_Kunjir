@@ -9,7 +9,8 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Forms\Components\{TextInput, FileUpload, Select, Grid};
-use Filament\Tables\Columns\{TextColumn, ImageColumn};
+use Filament\Tables\Columns\{TextColumn};
+use Illuminate\Support\Facades\Auth;
 
 class UserResource extends Resource
 {
@@ -48,11 +49,12 @@ class UserResource extends Resource
                 Select::make('role')
                     ->label('Peran Pengguna')
                     ->options([
+                        'superadmin' => 'Super Admin',
                         'admin' => 'Admin',
                         'editor' => 'Editor',
-                        'user' => 'User',
                     ])
-                    ->default('user')
+                    ->default('superadmin')
+                    ->relationship('roles', 'name')
                     ->required(),
             ]),
 
@@ -70,11 +72,6 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                // ImageColumn::make('avatar')
-                //     ->label('Foto')
-                //     ->circular()
-                //     ->defaultImageUrl(null),
-
                 TextColumn::make('name')
                     ->label('Nama')
                     ->searchable()
@@ -88,7 +85,7 @@ class UserResource extends Resource
                     ->badge()
                     ->label('Peran')
                     ->colors([
-                        'primary' => 'user',
+                        'primary' => 'superadmin',
                         'success' => 'admin',
                         'warning' => 'editor',
                     ])
@@ -123,5 +120,11 @@ class UserResource extends Resource
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
+    }
+
+    public static function canAccess(): bool
+    {
+        $user = Auth::user();
+        return $user->hasRole('superadmin');
     }
 }

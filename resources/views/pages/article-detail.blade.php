@@ -25,7 +25,7 @@
                     @if ($article->author)
                         <div class="flex items-center gap-2">
                             <div
-                                class="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white text-xs font-bold shadow-sm">
+                                class="w-7 h-7 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white text-xs font-bold shadow-sm">
                                 {{ strtoupper(substr($article->author, 0, 1)) }}
                             </div>
                             <span class="font-semibold text-gray-900">{{ $article->author }}</span>

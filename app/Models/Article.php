@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Article extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory;
 
     /**
      * Nama tabel (jika berbeda dari plural nama model).
