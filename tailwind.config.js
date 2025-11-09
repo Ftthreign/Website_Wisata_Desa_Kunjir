@@ -10,18 +10,24 @@ export default {
         "./resources/**/*.js",
         "./resources/**/*.vue",
     ],
-    safelist: ["animate-fade1", "animate-fade2", "animate-fade3", "animate-fade4", "animate-fade5"],
+    safelist: [
+        "animate-fade1",
+        "animate-fade2",
+        "animate-fade3",
+        "animate-fade4",
+        "animate-fade5",
+    ],
     theme: {
         extend: {
             fontFamily: {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],
             },
             animation: {
-                fade1: "fade1 50s infinite",
-                fade2: "fade2 50s infinite",
-                fade3: "fade3 50s infinite",
-                fade4: "fade4 50s infinite",
-                fade5: "fade5 50s infinite",
+                fade1: "fade1 25s infinite",
+                fade2: "fade2 25s infinite",
+                fade3: "fade3 25s infinite",
+                fade4: "fade4 25s infinite",
+                fade5: "fade5 25s infinite",
                 "fade-in": "fade-in 0.8s ease-out both",
                 "slide-in-left": "slide-in-left 0.8s ease-out both",
                 "slide-in-right": "slide-in-right 0.8s ease-out 0.2s both",

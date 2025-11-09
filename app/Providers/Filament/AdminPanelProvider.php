@@ -11,7 +11,7 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use App\Filament\Widgets\{AccountWidget, UserStatsWidget, PlanTripChart};
+use App\Filament\Widgets\{AccountWidget};
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -19,6 +19,8 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Filament\Resources\ArticleResource\Widgets\ArticleWidget;
+use App\Filament\Resources\UserResource\Widgets\UserStatsWidget;
+use App\Filament\Resources\PlanTripResource\Widgets\PlanTripChart;
 
 class AdminPanelProvider extends PanelProvider
 {
